@@ -20,6 +20,7 @@ public class Trebuchet {
         } catch (FileNotFoundException e) {
             System.out.println("file not found");
             System.out.println(e.getMessage());
+            throw new FileNotFoundException();
         }
     }
 
