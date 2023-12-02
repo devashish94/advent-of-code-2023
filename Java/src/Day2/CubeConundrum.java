@@ -28,6 +28,7 @@ public class CubeConundrum {
                 String ballType = gameRound.split(" ")[1];
                 if (count > check.get(ballType)) {
                     possible = false;
+                    break;
                 }
             }
             if (possible) {
