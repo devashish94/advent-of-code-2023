@@ -22,25 +22,6 @@ public class WaitForIt {
                 .toList();
     }
 
-    private static void partOne(String url) throws IOException {
-        List<Integer> times = parseInputOne(url, 0);
-        List<Integer > distances = parseInputOne(url, 1);
-
-        int product = 1;
-        for (int i = 0; i < times.size(); i++) {
-            int record = distances.get(i);
-            int count = 0;
-            for (int timeHold = 0; timeHold <= times.get(i); timeHold++) {
-                if (timeHold * (times.get(i) - timeHold) > record) {
-                    count++;
-                }
-            }
-            product *= count;
-            System.out.println(count);
-        }
-        System.out.println(product);
-    }
-
     private static long parseInputTwo(String url, int line) throws IOException {
         Path path = Paths.get(url);
         String firstLine = Files.readAllLines(path)
@@ -51,21 +32,40 @@ public class WaitForIt {
         return Long.parseLong(firstLine);
     }
 
+    private static void partOne(String url) throws IOException {
+        List<Integer> times = parseInputOne(url, 0);
+        List<Integer > distances = parseInputOne(url, 1);
+
+        int product = 1;
+        for (int i = 0; i < times.size(); i++) {
+            int record = distances.get(i);
+            int ways = getNumberWays(times.get(i), record);
+            product *= ways;
+        }
+        System.out.println(product);
+    }
+
     private static void partTwo(String url) throws IOException {
         long time = parseInputTwo(url, 0);
         long recordDistance = parseInputTwo(url, 1);
 
+        int ways = getNumberWays(time, recordDistance);
+        System.out.println(ways);
+    }
+
+    private static int getNumberWays(long time, long recordDistance) {
         int count = 0;
         for (int holdTime = 0; holdTime <= time; holdTime++) {
             if (holdTime * (time - holdTime) > recordDistance) {
                 count++;
             }
         }
-        System.out.println(count);
+        return count;
     }
 
     public static void main(String[] args) throws IOException {
         String url = "src/Day6/input";
+        partOne(url);
         partTwo(url);
     }
 }
